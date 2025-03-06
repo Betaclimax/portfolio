@@ -358,7 +358,7 @@ function App() {
   );
 
   return (
-    <Router>
+    <Router basename="/portfolio">
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:title" element={<ProjectDetail projects={projects} />} />
