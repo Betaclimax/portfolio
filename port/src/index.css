@@ -1,0 +1,857 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Exo 2:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+
+:root {
+  --bg: #e0e0e0;
+  --text: #333;
+  --shadow: #b5b5b5;
+  --highlight: #ffffff;
+  --accent: #00aaff;
+}
+.dark {
+  --bg: #2b2b2b;
+  --text: #e0e0e0;
+  --shadow: #1a1a1a;
+  --highlight: #3d3d3d;
+  --accent: #00ccff;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+.neumorphic {
+  background: var(--bg);
+  box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--highlight);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+.neumorphic:hover {
+  box-shadow: 4px 4px 8px var(--shadow), -4px -4px 8px var(--highlight);
+  transform: translateY(-2px);
+}
+.fade-in {
+  animation: fadeIn 1s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.slick-slider, .slick-list, .slick-track {
+  height: 100% !important;
+}
+.slick-slide > div {
+  height: 100%;
+}
+/* Letter animation */
+.letter {
+  display: inline-block;
+  animation: glitchFade 3s infinite ease-in-out;
+}
+@keyframes glitchFade {
+  0%, 20%, 80%, 100% { opacity: 1; transform: translateY(0); }
+  40% { opacity: 0; transform: translateY(-5px); }
+  60% { opacity: 0; transform: translateY(5px); }
+}
+/* Text glow */
+.glow-text {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px var(--accent);
+}
+/* Projects section - Image Background */
+.project-bg {
+  background: url('./images/banner-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+.project-bg > * {
+  position: relative;
+  z-index: 1;
+}
+.project-slide {
+  background: rgba(255, 255, 255, 0.9); /* Slightly opaque white for cards */
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-slide:hover {
+  transform: rotate(2deg) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 170, 255, 0.5);
+}
+.slide-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+.slide-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-100px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(100px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Fashion Text for Projects */
+.fashion-text {
+  font-family: 'Exo 2', sans-serif;
+  display: inline-flex;
+}
+.title-letter {
+  display: inline-block;
+  animation: typeIn 0.5s ease-out forwards, glowPulse 2s infinite ease-in-out;
+}
+@keyframes typeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 5px var(--accent); }
+  50% { text-shadow: 0 0 15px var(--accent), 0 0 25px rgba(0, 170, 255, 0.7); }
+}
+.fashion-desc {
+  font-family: 'Exo 2', sans-serif;
+  animation: fadeInDesc 1s ease-out forwards;
+  transition: color 0.3s ease;
+}
+.fashion-desc:hover {
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+@keyframes fadeInDesc {
+  from { opacity: 0; }
+  to { opacity: 0.8; }
+}
+/* Skills section */
+.skill-bg {
+  background: linear-gradient(135deg, var(--bg), rgba(0, 170, 255, 0.1));
+  animation: waveShift 10s infinite alternate;
+}
+@keyframes waveShift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+.hex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  align-items: center;
+}
+.hex-tile {
+  position: relative;
+  width: 120px;
+  height: 138px;
+  background: var(--bg);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseIn 0.8s ease-out forwards;
+}
+.hex-tile::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.2;
+  z-index: 0;
+}
+.hex-content {
+  position: relative;
+  z-index: 1;
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.hex-tile:hover .hex-content {
+  transform: scale(1.1);
+  color: white;
+}
+.hex-tile:hover::before {
+  animation: ripple 1s infinite;
+  opacity: 0.8;
+}
+@keyframes pulseIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes ripple {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+/* Contact section */
+.contact-bg {
+  background: linear-gradient(135deg, var(--bg), rgba(0, 170, 255, 0.1));
+  animation: waveShift 10s infinite alternate;
+}
+.glow-input {
+  transition: box-shadow 0.3s ease;
+}
+.glow-input:focus {
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(0, 170, 255, 0.5);
+}
+.pulse-button {
+  animation: pulseButton 2s infinite ease-in-out;
+}
+@keyframes pulseButton {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+.animate-slide-in {
+  animation: slideIn 0.8s ease-out forwards;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Nav section */
+.nav-bg {
+  background: linear-gradient(180deg, var(--bg), rgba(0, 170, 255, 0.1));
+  box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+}
+.curved-nav {
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
+}
+.nav-icon {
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+.nav-icon:hover {
+  transform: scale(1.2);
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(0, 170, 255, 0.7);
+}
+.animate-nav-in {
+  animation: navIn 0.5s ease-out forwards;
+}
+@keyframes navIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Fashion Button for Projects */
+.fashion-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.fashion-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 170, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: -1;
+}
+.fashion-button:hover::before {
+  width: 200%;
+  height: 200%;
+}
+.fashion-button:active::before {
+  background: rgba(0, 170, 255, 0.5);
+  transition: none;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .text-9xl { font-size: 4rem; }
+  .text-2xl { font-size: 1.25rem; }
+  main { margin-left: 5rem; padding: 1rem; }
+  nav { width: 60px; }
+  .hex-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+  .hex-tile { width: 100px; height: 115px; }
+  .hex-content { font-size: 1rem; }
+  .curved-nav { width: 60px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; }
+  .nav-icon { font-size: 1.5rem; }
+  .fashion-button { padding: 8px 16px; font-size: 0.875rem; }
+  .fashion-text { font-size: 1.5rem; }
+  .fashion-desc { font-size: 0.875rem; }
+}
+
+.work-bg {
+    background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+  }
+  .work-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for contrast */
+    z-index: 0;
+  }
+  .work-bg > * {
+    position: relative;
+    z-index: 1;
+  }
+  .work-title {
+    font-family: 'Exo 2', sans-serif;
+    animation: glowPulse 2s infinite ease-in-out, slideUp 0.8s ease-out forwards;
+  }
+  .work-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+  }
+  .animate-work-in {
+    animation: workIn 0.8s ease-out forwards;
+  }
+  @keyframes workIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  /* Add to the end of your existing index.css */
+.fashion-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--accent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulseIcon 2s infinite ease-in-out;
+    z-index: 10; /* Ensure it’s above other elements */
+  }
+  .fashion-icon-button:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px var(--accent), 0 0 30px rgba(0, 170, 255, 0.7);
+  }
+  @keyframes pulseIcon {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+/* Update .fashion-avatar in your existing index.css */
+.fashion-avatar {
+  width: 150px; /* Increased from 100px to 150px */
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(0, 170, 255, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.fashion-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px var(--accent), 0 0 60px rgba(0, 170, 255, 0.7);
+}
+.animate-avatar-in {
+  animation: avatarIn 1s ease-out forwards;
+}
+@keyframes avatarIn {
+  from { opacity: 0; transform: scale(0.5) translateY(-50px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}/* Replace .neon-letter and related styles in your existing index.css */
+/* Typewriter Animation */
+.fashion-subtitle {
+  display: inline-block;
+  white-space: pre-wrap; /* Preserves spaces and wraps naturally */
+  overflow: hidden;
+  max-width: 100%;
+  font-family: 'modern', sans-serif;
+  animation: typeWriter 3s steps(100) forwards, blinkCursor 0.7s infinite; /* 100 steps for ~100 chars */
+  border-right: 2px solid var(--accent); /* Blinking cursor */
+  font-size:20px;
+}
+@keyframes typeWriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blinkCursor {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--accent); }
+}
+
+/* Add new font import and styles to your existing index.css */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
+
+/* Gradient Text for Project Header */
+.gradient-text {
+  background: linear-gradient(90deg, #00ccff, #ff4081, #00ccff); /* Cyan to pink gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: transform 0.3s ease;
+}
+.project-header {
+  font-family: 'Exo 2', sans-serif; /* Bold, futuristic font */
+  text-shadow: 0 0 0px rgba(0, 204, 255, 0.8); /* Subtle cyan glow */
+}
+.project-header:hover {
+  transform: scale(1.05); /* Slight scale on hover */
+}
+
+.bright-header {
+  color: #fff; /* Bright white base */
+  font-family: 'Poppins', sans-serif; /* Playful, bold, modern font */
+  text-shadow: 0 0 15px #3bfff5, 0 0 30px #3bffbe, 0 0 50px rgba(59, 199, 255, 0.8); /* Neon yellow glow */
+  animation: bounceIn 1s ease-out forwards;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+.bright-header:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px #3bfff5, 0 0 40px #ffeb3b, 0 0 60px rgba(255, 235, 59, 1); /* Brighter glow on hover */
+}
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.8) translateY(-20px); }
+  60% { opacity: 1; transform: scale(1.1) translateY(5px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Add new styles to your existing index.css */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.skill-card {
+  background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  animation: slideUpSkill 0.8s ease-out forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(10, 140, 192, 0.5);
+}
+
+@keyframes slideUpSkill {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Update .contact-info and .contact-item in your existing index.css */
+.contact-info {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  justify-content: center;
+  gap: 20px; /* Space between items */
+  flex-wrap: wrap; /* Wraps on smaller screens */
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 16px; /* Reduced padding for smaller height */
+  animation: slideInContact 0.8s ease-out forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+@keyframes slideInContact {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Add to your existing index.css */
+.project-detail-card {
+  background: rgba(255, 255, 255, 0.1); /* Glassmorphism */
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fashion-button {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Replace .fashion-button in your existing index.css */
+.stellar-button {
+  background: linear-gradient(90deg, #00ccff, #ff4081, #00ccff); /* Cyan to pink gradient */
+  color: #fff; /* White text */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Subtle text glow */
+  border: none; /* Remove border */
+  box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5); /* Gradient glow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stellar-button:hover {
+  transform: scale(1.1); /* Bigger scale for drama */
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.8), 0 0 40px rgba(255, 64, 129, 0.8); /* Brighter glow */
+  animation: pulseGlow 1.5s infinite; /* Pulsing effect */
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(0, 204, 255, 1), 0 0 40px rgba(255, 64, 129, 1); }
+  100% { box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5); }
+}
+
+/* Add or update in your existing index.css */
+.project-card {
+  background: rgba(255, 255, 255, 0.1); /* Glassmorphism */
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden; /* Keeps image corners neat */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideUpProject 0.8s ease-out forwards;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+@keyframes slideUpProject {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stellar-button {
+  background: linear-gradient(90deg, #00ccff, #ff4081, #00ccff); /* Cyan to pink gradient */
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stellar-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.8), 0 0 40px rgba(255, 64, 129, 0.8);
+  animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(0, 204, 255, 1), 0 0 40px rgba(255, 64, 129, 1); }
+  100% { box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 20px rgba(255, 64, 129, 0.5); }
+}
+
+/* Ensure .project-slide animations still work */
+.project-slide.slide-left { animation: slideLeft 0.8s ease-out forwards; }
+.project-slide.slide-right { animation: slideRight 0.8s ease-out forwards; }
+
+/* Replace .stellar-button and add .neon-link in your existing index.css */
+.neon-link {
+  position: relative;
+  padding-bottom: 4px; /* Space for underline */
+  color: var(--accent); /* Cyan text */
+  text-decoration: none;
+}
+
+.neon-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00ccff, #00ffcc); /* Cyan to teal gradient */
+  box-shadow: 0 0 5px #00ccff, 0 0 10px #00ffcc; /* Neon glow */
+  transition: width 0.3s ease-in-out;
+}
+
+.neon-link:hover::after {
+  width: 100%; /* Underline grows on hover */
+}
+
+.neon-link:hover {
+  text-shadow: 0 0 5px var(--accent); /* Subtle text glow */
+}
+
+/* Keep .project-card styles */
+.project-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideUpProject 0.8s ease-out forwards;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+@keyframes slideUpProject {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Update in your existing index.css */
+.fashion-project {
+  display: block;
+  padding: 0 8px; /* Small padding for slider spacing */
+}
+
+.fashion-project-card {
+  background: rgb(10, 72, 77); 
+  border: 1px solid rgba(0, 204, 255, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fashion-project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.7);
+}
+
+.cyber-button {
+  background: transparent;
+  border: 1px solid #fff; /* White border */
+  color: #fff; /* White text */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cyber-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.4s ease-in-out;
+  z-index: -1;
+}
+
+.cyber-button:hover::before {
+  left: 100%;
+}
+
+.cyber-button:hover {
+  box-shadow: 0 0 10px #df0606;
+}
+
+/* Replace .stellar-button and add new styles in your existing index.css */
+.nova-detail-card {
+  background: rgba(20, 20, 30, 0.9); /* Dark, sleek base */
+  border: 1px solid rgba(0, 204, 255, 0.5); /* Subtle cyan edge */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.2); /* Soft glow */
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.nova-header {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 204, 255, 0.8), 0 0 20px rgba(255, 64, 129, 0.5); /* Dual glow */
+  font-family: 'Poppins', sans-serif; /* Modern font */
+}
+
+.nova-button {
+  background: transparent;
+  border: 2px solid #fff; /* White border */
+  color: #fff; /* White text */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.nova-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 204, 255, 0.4), transparent); /* Cyan swipe */
+  transition: left 0.4s ease-in-out;
+  z-index: -1;
+}
+
+.nova-button:hover::before {
+  left: 100%;
+}
+
+.nova-button:hover {
+  color: var(--accent); /* Cyan text on hover */
+  border-color: var(--accent); /* Cyan border */
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.7); /* Neon glow */
+  transform: scale(1.05); /* Subtle scale */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Add if not already present */
+.nova-button {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.nova-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 204, 255, 0.4), transparent);
+  transition: left 0.4s ease-in-out;
+  z-index: -1;
+}
+
+.nova-button:hover::before {
+  left: 100%;
+}
+
+.nova-button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.7);
+  transform: scale(1.05);
+}
+
+/* Add to your existing index.css */
+:root {
+  --bg: #1a1a2e; /* Default dark bg */
+  --text: #fff; /* Default white text */
+  --accent: #00ccff; /* Default cyan accent */
+}
+
+html.light {
+  --bg: #fff;
+  --text: #000;
+  --accent: #00ccff;
+}
+
+html.dark {
+  --bg: #1a1a2e;
+  --text: #fff;
+  --accent: #00ccff;
+}
+
+html.sunset {
+  --bg: #ff6f61;
+  --text: #fff;
+  --accent: #ffd700; /* Gold accent */
+}
+
+html.neon {
+  --bg: #0d0d1a;
+  --text: #fff;
+  --accent: #ff00ff; /* Pink accent */
+}
+
+/* Ensure these elements adapt */
+body { background: var(--bg); color: var(--text); }
+.nav-bg { background: rgba(var(--bg), 0.9); }
+.bright-header { color: var(--text); text-shadow: 0 0 10px var(--accent); }
+.glow-text { text-shadow: 0 0 5px var(--accent); }
+.fashion-project-card { border: 1px solid var(--accent); }
+.cyber-button { border: 1px solid var(--text); color: var(--text); }
+.cyber-button:hover { box-shadow: 0 0 10px var(--accent); }
+
+/* Add to your existing index.css */
+.hover-spin {
+  transition: transform 0.3s ease;
+}
+
+.hover-spin:hover {
+  transform: rotate(360deg);
+}
+
+.hover-glow {
+  transition: text-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.2);
+}
+/* Add to your existing index.css */
+.tech-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tech-section {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 16px;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.tech-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: var(--text);
+  font-size: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
