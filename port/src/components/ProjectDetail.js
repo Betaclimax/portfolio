@@ -24,7 +24,7 @@ function ProjectDetail({ projects }) {
         <div className="nova-detail-card">
           <h3 className="text-xl font-bold text-[var(--accent)] glow-text mb-2">position</h3>
           <p className="text-base mb-4">{project.position}</p>
-          <h3 className="text-xl font-bold text-[var(--accent)] glow-text mb-2">Tech Stack</h3>
+          <h3 className="text-xl font-bold text-[var(--accent)] glow-text mb-2">Tech  Stack</h3>
           <p className="text-base mb-4">{project.tech}</p>
           <h3 className="text-xl font-bold text-[var(--accent)] glow-text mb-2">Date</h3>
           <p className="text-base mb-4">{project.Date}</p>
