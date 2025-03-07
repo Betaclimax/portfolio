@@ -1,8 +1,8 @@
-import Project from './components/Projects';
+import Project from './components/Projects'; 
 import ProjectDetail from './components/ProjectDetail';
 import WorkExperience from './components/WorkExperience';
 import { useState, useEffect } from 'react';
-import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink, FaDiscord } from 'react-icons/fa';
+import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink } from 'react-icons/fa';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -17,17 +17,16 @@ import c3 from './images/c3.jpg';
 import c4 from './images/c4.jpg';
 import c5 from './images/c5.jpg';
 
-
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [activeSkill, setActiveSkill] = useState(null);
   const projects = [
     { 
-      title: "Tradelot Technology, Remote", 
+      title: "Phylis", 
       position: "Front-End Developer", 
       image: c1,
       tech: "Translated design team's UX wireframes and mockups into responsive, interactive features, using HTML/CSS and JavaScript Worked with agile team to migrate legacy company website to AngularJS, Sass, HTML5, and Drupal Created HTML email templates that improved email CTR rates by ~25% Designed and developed GUI for applications and modules, using JavaScript",
-      Date: "May 2019 to Jul 2020",
+      Date: "February 2017 - October 2019",
       demo: "https://example.com/my-first-app"
     },
     { 
@@ -39,19 +38,19 @@ function App() {
       demo: "https://jin-portfolio.netlify.app"
     },
     { 
-      title: "Flatfile", 
+      title: "delta Group", 
       position: "AI Engineer", 
       image: c4,
       tech: "Developed and optimized AI models for recommendation systems. Implemented deep learning frameworks such as TensorFlow, PyTorch, and scikit-learn to enhance model performance. Designed and maintained scalable AI solutions, integrating them into production environments. Conducted data preprocessing, feature engineering, and model evaluation to improve accuracy. Collaborated with cross-functional teams to deploy AI-driven solutions, enhancing automation and decision-making processes.",
-      Date: "May 2021 to Mar 2023",
+      Date: "October 2019 - August 2021",
       demo: "https://jin-portfolio.netlify.app"
     },
     { 
-      title: "Marble Dao, Remote", 
+      title: "EPAM Systems", 
       position: "Senior Smart Contract and Full Stack Developer", 
       image: c2,
       tech: "Developed smart contracts for Dex, Staking, NFT Market Place with Cosmwasm Worked with Design team to create user-friendly UI and convenient UX, created Single Page Application with Next.js Developed RESTful API with Node.js and Express.js to provide statistics and analytics for NFT marketplace Used Jasmine and Jest to test component functionality and used Postman to test APIs Led a development team of 4 senior developers Participated in Agile methodology for application development and used JIRA as project management tool",
-      Date: "Apr 2023 to Mar 2024",
+      Date: "August 2022 - September 2024",
       demo: "https://jin-portfolio.netlify.app"
     },
     { 
@@ -146,7 +145,7 @@ function App() {
           className="text-3xl mb-12 text-[var(--accent)] nav-icon animate-nav-in hover-glow"
           style={{ animationDelay: '0.1s' }}
         >
-          {themes.find(t => t.name === theme).icon}
+         
         </button>
         <button 
           onClick={() => scrollToSection('projects')} 
@@ -169,42 +168,7 @@ function App() {
         >
           Contact
         </button>
-        <a 
-          href={Resume} 
-          download="Jin_Resume.pdf" 
-          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
-          style={{ animationDelay: '0.7s' }}
-          title="Download Resume"
-        >
-          <FaDownload />
-        </a>
-        <a 
-          href="https://github.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-3xl mt-auto mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
-          style={{ animationDelay: '0.5s' }}
-        >
-          <FaGithub />
-        </a>
-        <a 
-          href="https://discord.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
-          style={{ animationDelay: '0.6s' }}
-        >
-          <FaDiscord />
-        </a>
-        <a 
-          href="https://telegram.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
-          style={{ animationDelay: '0.6s' }}
-        >
-          <FaTelegram />
-        </a>
+        
       </nav>
 
       {/* Main Content */}
@@ -230,7 +194,7 @@ function App() {
               className="fashion-avatar mb-6" 
             />
             <div className="text-center">
-              <h1 className="text-6xl font-bold mb-2 text-[var(--text)] glow-text">Hi, I am Jin!</h1>
+              <h1 className="text-6xl font-bold mb-2 text-[var(--text)] glow-text">Hi, I am Ihor!</h1>
               <p className="text-xl text-[var(--text)] glow-text fashion-subtitle">{subtitle}</p>
             </div>
           </div>
@@ -252,6 +216,7 @@ function App() {
                     title={project.title} 
                     position={project.position} 
                     image={project.image} 
+                    animationDelay={`${2 + index * 0.5}s`} // 2s base delay + stagger
                   />
                 </Link>
               ))}
@@ -331,7 +296,7 @@ function App() {
             <div className="contact-info max-w-8xl mx-auto">
               <div className="contact-item">
                 <FaEnvelope className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
-                <span className="text-lg text-[var(--text)] glow-text">beta.climax@gmail.com</span>
+                <span className="text-lg text-[var(--text)] glow-text">haviukihor@gmail.com</span>
               </div>
               <div className="contact-item">
                 <FaTelegram className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
@@ -343,7 +308,7 @@ function App() {
               </div>
               <div className="contact-item">
                 <FaMapMarkerAlt className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
-                <span className="text-lg text-[var(--text)] glow-text">Toronto City, Canada</span>
+                <span className="text-lg text-[var(--text)] glow-text">Poltava, Ukraine</span>
               </div>
             </div>
           </div>
@@ -352,7 +317,7 @@ function App() {
 
       {/* Footer */}
       <footer className="text-center py-6 text-[var(--text)] opacity-70">
-        <p>©Jin.Designed</p>
+        <p>© Ihor. Designed</p>
       </footer>
     </div>
   );
