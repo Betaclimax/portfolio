@@ -1,8 +1,8 @@
-import Project from './components/Projects'; 
+import Project from './components/Projects';
 import ProjectDetail from './components/ProjectDetail';
 import WorkExperience from './components/WorkExperience';
 import { useState, useEffect } from 'react';
-import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink } from 'react-icons/fa';
+import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink, FaDiscord } from 'react-icons/fa';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -11,54 +11,35 @@ import Image1 from './images/banner-bg3.jpg';
 import Image2 from './images/banner-bg4.jpg';
 import Avatar from './images/avatar.jpg';
 import Resume from './assets/myresume2.pdf';
-import c1 from './images/c1.jpg';
-import c2 from './images/c2.jpg';
-import c3 from './images/c3.jpg';
-import c4 from './images/c4.jpg';
-import c5 from './images/c5.jpg';
 
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const themes = [
+    { name: 'dark', icon: <FaMoon /> },
+    { name: 'light', icon: <FaSun /> },
+    { name: 'sunset', icon: <FaCloudSun /> },
+    { name: 'neon', icon: <FaStar /> }
+  ];
+
+  // Validate initial theme from localStorage, default to 'light' if invalid
+  const initialTheme = localStorage.getItem('theme');
+  const validTheme = themes.some(t => t.name === initialTheme) ? initialTheme : 'dark';
+  const [theme, setTheme] = useState(validTheme);
+
   const [activeSkill, setActiveSkill] = useState(null);
   const projects = [
     { 
-      title: "Phylis", 
+      title: "Tradelot Technology, Remote", 
       position: "Front-End Developer", 
-      image: c1,
-      tech: "Translated design team's UX wireframes and mockups into responsive, interactive features, using HTML/CSS and JavaScript Worked with agile team to migrate legacy company website to AngularJS, Sass, HTML5, and Drupal Created HTML email templates that improved email CTR rates by ~25% Designed and developed GUI for applications and modules, using JavaScript",
-      Date: "February 2017 - October 2019",
+      image: "https://picsum.photos/300/200?random=1",
+      challenge: "Mastering React hooks and state management.",
       demo: "https://example.com/my-first-app"
     },
     { 
-      title: "Crane & Jenkins, Remote", 
-      position: "Front-End Developer", 
-      image: c3,
-      tech: "Revamped UI and app interface for customer-facing e-commerce site with 200,000+ unique visitors per month Designed and developed front-end for 20+ websites, using jQuery, AJAX, React.js, and Handlebars.js Created custom AngularJS components for internal framework Automated image optimization, using Grunt and minified JS and CSS, which reduced page load times by up to 30%",
-      Date: "Jul 2020 to Apr 2021",
-      demo: "https://jin-portfolio.netlify.app"
-    },
-    { 
-      title: "delta Group", 
-      position: "AI Engineer", 
-      image: c4,
-      tech: "Developed and optimized AI models for recommendation systems. Implemented deep learning frameworks such as TensorFlow, PyTorch, and scikit-learn to enhance model performance. Designed and maintained scalable AI solutions, integrating them into production environments. Conducted data preprocessing, feature engineering, and model evaluation to improve accuracy. Collaborated with cross-functional teams to deploy AI-driven solutions, enhancing automation and decision-making processes.",
-      Date: "October 2019 - August 2021",
-      demo: "https://jin-portfolio.netlify.app"
-    },
-    { 
-      title: "EPAM Systems", 
-      position: "Senior Smart Contract and Full Stack Developer", 
-      image: c2,
-      tech: "Developed smart contracts for Dex, Staking, NFT Market Place with Cosmwasm Worked with Design team to create user-friendly UI and convenient UX, created Single Page Application with Next.js Developed RESTful API with Node.js and Express.js to provide statistics and analytics for NFT marketplace Used Jasmine and Jest to test component functionality and used Postman to test APIs Led a development team of 4 senior developers Participated in Agile methodology for application development and used JIRA as project management tool",
-      Date: "August 2022 - September 2024",
-      demo: "https://jin-portfolio.netlify.app"
-    },
-    { 
-      title: "GlobalLogic, Remote", 
-      position: "Senior Software Engineer", 
-      image: c5,
-      tech: "Developed a high-traffic eCommerce platform using Nest.js and MongoDB, which resulted in a 30% increase in user engagement. Implemented microservices architecture to enhance system scalability, reducing downtime by 25% during peak traffic.",
-      Date: "Apr 2024 to Dec 2024",
+      title: "Portfolio Site", 
+      position: "This full-stack masterpiece.", 
+      image: "https://picsum.photos/300/200?random=2",
+      tech: "React, Node.js, Tailwind CSS",
+      challenge: "Creating a responsive, animated UI with smooth scrolling.",
       demo: "https://jin-portfolio.netlify.app"
     },
   ];
@@ -93,13 +74,6 @@ function App() {
     localStorage.setItem('theme', theme);
     document.documentElement.className = theme;
   }, [theme]);
-
-  const themes = [
-    { name: 'dark', icon: <FaMoon /> },
-    { name: 'light', icon: <FaSun /> },
-    { name: 'sunset', icon: <FaCloudSun /> },
-    { name: 'neon', icon: <FaStar /> }
-  ];
 
   const switchTheme = () => {
     const currentIndex = themes.findIndex(t => t.name === theme);
@@ -145,14 +119,14 @@ function App() {
           className="text-3xl mb-12 text-[var(--accent)] nav-icon animate-nav-in hover-glow"
           style={{ animationDelay: '0.1s' }}
         >
-         
+          {themes.find(t => t.name === theme)?.icon || <FaSun />} {/* Fallback to FaSun */}
         </button>
         <button 
-          onClick={() => scrollToSection('projects')} 
+          onClick={() => scrollToSection('home')} 
           className="text-xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-scale"
           style={{ animationDelay: '0.2s' }}
         >
-          Projects
+          home
         </button>
         <button 
           onClick={() => scrollToSection('skills')} 
@@ -168,13 +142,51 @@ function App() {
         >
           Contact
         </button>
+
+        <a 
+          href={Resume} 
+          download="Jin_Resume.pdf" 
+          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
+          style={{ animationDelay: '0.7s' }}
+          title="Download Resume"
+        >
+          <FaDownload />
+        </a>
+
+        <a 
+          href="https://github.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-3xl mt-auto mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
+          style={{ animationDelay: '0.5s' }}
+        >
+          <FaGithub />
+        </a>
+        <a 
+          href="https://linkedin.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
+          style={{ animationDelay: '0.6s' }}
+        >
+          <FaLinkedin />
+        </a>
+        <a 
+          href="https://discord.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
+          style={{ animationDelay: '0.6s' }}
+        >
+          <FaDiscord />
+        </a>
         
       </nav>
 
       {/* Main Content */}
       <main className="ml-24 p-8">
         {/* Hero with Carousel */}
-        <section className="relative h-screen">
+        <section id ="home" className="relative h-screen">
           <Slider {...sliderSettings} className="w-full h-full">
             {carouselImages.map((img, index) => (
               <div key={index} className="w-full h-screen">
@@ -194,33 +206,9 @@ function App() {
               className="fashion-avatar mb-6" 
             />
             <div className="text-center">
-              <h1 className="text-6xl font-bold mb-2 text-[var(--text)] glow-text">Hi, I am Ihor!</h1>
+              <h1 className="text-6xl font-bold mb-2 text-[var(--text)] glow-text">Hi, I am Jin!</h1>
               <p className="text-xl text-[var(--text)] glow-text fashion-subtitle">{subtitle}</p>
             </div>
-          </div>
-        </section>
-
-        {/* Projects */}
-        <section id="projects" className="py-16 project-bg relative overflow-hidden">
-          <h2 className="text-3xl font-bold text-center mb-8 bright-header">A Peek at My Portfolio</h2>
-          <h2 className="text-2xl font-bold text-center mb-12 bright-header">Here are some cool projects I've worked on that really show what I can do.</h2>
-          <div className="max-w-4xl mx-auto">
-            <Slider {...projectSliderSettings}>
-              {projects.map((project, index) => (
-                <Link 
-                  to={`/project/${project.title}`} 
-                  key={index} 
-                  className="fashion-project px-2"
-                >
-                  <Project 
-                    title={project.title} 
-                    position={project.position} 
-                    image={project.image} 
-                    animationDelay={`${2 + index * 0.5}s`} // 2s base delay + stagger
-                  />
-                </Link>
-              ))}
-            </Slider>
           </div>
         </section>
 
@@ -250,7 +238,7 @@ function App() {
               ))}
             </div>
             <div className="mt-12">
-              <h3 className="text-3xl font-bold text-[var(--text)] glow-text mb-8">My Tech Stack</h3>
+              <h3 className="text-3xl font-bold text-[var(--text)] glow-text mb-8">My description</h3>
               <div className="tech-grid max-w-4xl mx-auto">
                 <div className="tech-section">
                   <h4 className="text-xl font-bold text-[var(--accent)] glow-text mb-4">Languages</h4>
@@ -296,7 +284,7 @@ function App() {
             <div className="contact-info max-w-8xl mx-auto">
               <div className="contact-item">
                 <FaEnvelope className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
-                <span className="text-lg text-[var(--text)] glow-text">haviukihor@gmail.com</span>
+                <span className="text-lg text-[var(--text)] glow-text">beta.climax@gmail.com</span>
               </div>
               <div className="contact-item">
                 <FaTelegram className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
@@ -308,7 +296,7 @@ function App() {
               </div>
               <div className="contact-item">
                 <FaMapMarkerAlt className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
-                <span className="text-lg text-[var(--text)] glow-text">Poltava, Ukraine</span>
+                <span className="text-lg text-[var(--text)] glow-text">Toronto City, Canada</span>
               </div>
             </div>
           </div>
@@ -317,13 +305,13 @@ function App() {
 
       {/* Footer */}
       <footer className="text-center py-6 text-[var(--text)] opacity-70">
-        <p>© Ihor. Designed</p>
+        <p>©Jin.Designed</p>
       </footer>
     </div>
   );
 
   return (
-    <Router basename="/portfolio">
+    <Router basename='/portfolio'>
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:title" element={<ProjectDetail projects={projects} />} />
