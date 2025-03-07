@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ace-builds": "^1.39.0",
     "axios": "^1.8.2",
+    "chart.js": "^4.4.8",
     "react": "^18.2.0",
     "react-ace": "^14.0.1",
     "react-circular-progressbar": "^2.2.0",
@@ -17,8 +18,10 @@
     "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
+    "react-tsparticles": "^2.12.2",
     "slick-carousel": "^1.8.1",
     "tailwind": "^4.0.0",
+    "tsparticles": "^3.8.1",
     "web-vitals": "^2.1.4"
   },
   "homepage": "https://betaclimax.github.io/portfolio",

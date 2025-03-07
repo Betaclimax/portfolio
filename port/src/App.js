@@ -2,7 +2,7 @@ import Project from './components/Projects';
 import ProjectDetail from './components/ProjectDetail';
 import WorkExperience from './components/WorkExperience';
 import { useState, useEffect } from 'react';
-import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink, FaDiscord } from 'react-icons/fa';
+import { FaSun, FaMoon, FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTelegram, FaDownload, FaCloudSun, FaStar, FaCode, FaBrain, FaLink, FaDiscord, FaRobot, FaTimes } from 'react-icons/fa';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,6 +13,89 @@ import Image1 from './images/banner-bg3.jpg';
 import Image2 from './images/banner-bg4.jpg';
 import Avatar from './images/avatar.jpg';
 import Resume from './assets/myresume2.pdf';
+
+// Chatbot Component
+function Chatbot() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([{ sender: 'bot', text: 'Hey! Ask me anything about Jin’s skills!' }]);
+  const [userInput, setUserInput] = useState('');
+
+  const handleChatSubmit = (e) => {
+    e.preventDefault();
+    if (!userInput.trim()) return;
+
+    const newMessages = [...chatMessages, { sender: 'user', text: userInput }];
+    setChatMessages(newMessages);
+
+    let botResponse = "Hmm, I’m not sure about that. Try asking about Jin’s skills!";
+    if (userInput.toLowerCase().includes("skill")) {
+      botResponse = "Jin’s skilled in AI, blockchain, and web development—pretty cool, right? Ask me about a specific skill!";
+    } else if (userInput.toLowerCase().includes("ai")) {
+      botResponse = "Jin builds AI-powered apps with automation, analytics, and more. Want details?";
+    } else if (userInput.toLowerCase().includes("blockchain")) {
+      botResponse = "Jin’s a blockchain pro—Solidity, Rust, and Cosmos SDK are his jam. Curious about a project?";
+    } else if (userInput.toLowerCase().includes("web")) {
+      botResponse = "Jin crafts sleek, scalable web apps with React, Node.js, and more. What do you want to know?";
+    }
+
+    setTimeout(() => {
+      setChatMessages((prev) => [...prev, { sender: 'bot', text: botResponse }]);
+    }, 500);
+
+    setUserInput('');
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setIsChatOpen(!isChatOpen)}
+        className="fixed bottom-6 right-6 text-4xl text-[var(--accent)] bg-[rgba(0,0,0,0.5)] p-4 rounded-full hover-glow hover-scale"
+      >
+        <FaRobot />
+      </button>
+
+      {isChatOpen && (
+        <div key="chat-window" className="fixed bottom-20 right-6 w-80 h-96 bg-[rgba(0,0,0,0.7)] border border-[var(--accent)] rounded-lg shadow-lg flex flex-col animate-slide-up">
+          <div className="flex justify-between items-center p-2 border-b border-[var(--accent)]">
+            <h4 className="text-lg text-[var(--text)] glow-text">Jin’s AI Assistant</h4>
+            <button onClick={() => setIsChatOpen(false)} className="text-[var(--text)] hover-spin">
+              <FaTimes />
+            </button>
+          </div>
+          <div className="flex-1 p-4 overflow-y-auto">
+            {chatMessages.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`mb-2 p-2 rounded-lg ${msg.sender === 'bot' ? 'bg-[rgba(255,255,255,0.1)] text-[var(--text)]' : 'bg-[var(--accent)] text-black ml-auto'}`}
+                style={{ maxWidth: '80%' }}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+          <form onSubmit={handleChatSubmit} className="p-2 border-t border-[var(--accent)] flex">
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Ask me something..."
+              className="flex-1 p-2 bg-transparent text-[var(--text)] border-none focus:outline-none glow-input"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleChatSubmit(e);
+                }
+              }}
+            />
+            <button type="submit" className="text-[var(--accent)] p-2 hover-glow nova-button">
+              Send
+            </button>
+          </form>
+        </div>
+      )}
+    </>
+  );
+}
 
 function App() {
   const themes = [
@@ -25,8 +108,7 @@ function App() {
   const initialTheme = localStorage.getItem('theme');
   const validTheme = themes.some(t => t.name === initialTheme) ? initialTheme : 'dark';
   const [theme, setTheme] = useState(validTheme);
-  const [activeSkill, setActiveSkill] = useState(null);
-  const [activeTech, setActiveTech] = useState(null); // New state for tech toggles
+  const [activeTech, setActiveTech] = useState(null);
 
   const projects = [
     { 
@@ -155,10 +237,10 @@ function App() {
       <nav className="fixed left-0 top-0 h-screen w-24 flex flex-col items-center py-12 nav-bg curved-nav">
         <button 
           onClick={switchTheme} 
-          className="text-3xl mb-12 text-[var(--accent)] nav-icon animate-nav-in hover-glow"
-          style={{ animationDelay: '0.1s' }}
+          className="cyber-toggle mb-12"
+          title={`Switch to ${themes[(themes.findIndex(t => t.name === theme) + 1) % themes.length].name}`}
         >
-          {themes.find(t => t.name === theme)?.icon || <FaMoon />}
+          <span className="cyber-toggle-icon">{themes.find(t => t.name === theme)?.icon || <FaMoon />}</span>
         </button>
         <button 
           onClick={() => scrollToSection('home')} 
@@ -208,15 +290,6 @@ function App() {
         >
           <FaLinkedin />
         </a>
-        <a 
-          href="https://discord.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-3xl mb-10 text-[var(--text)] nav-icon animate-nav-in hover-spin"
-          style={{ animationDelay: '0.6s' }}
-        >
-          <FaDiscord />
-        </a>
       </nav>
 
       {/* Main Content */}
@@ -252,24 +325,20 @@ function App() {
         <section id="skills" className="py-16 skill-bg relative overflow-hidden">
           <div className="text-center">
             <h2 className="text-5xl font-bold mb-8 text-[var(--text)] glow-text">What I Offer</h2>
-            <p className="text-xl text-[var(--text)] mb-12 fashion-subtitle">Here’s how I can bring value to your projects:</p>
-            <div className="skill-grid max-w-4xl mx-auto">
+            <div className="cyber-orb-grid max-w-4xl mx-auto">
               {skills.map((skill, index) => (
                 <div 
                   key={index} 
-                  className="skill-card"
+                  className="cyber-orb-container"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
-                  <button 
-                    onClick={() => setActiveSkill(activeSkill === skill.name ? null : skill.name)}
-                    className="text-2xl text-[var(--accent)] glow-text flex items-center w-full justify-center hover-glow"
-                  >
-                    <span className="hover-spin inline-block mr-2">{skillIcons[skill.name]}</span> 
-                    <span>{skill.name}</span>
-                  </button>
-                  {activeSkill === skill.name && (
-                    <p className="text-[var(--text)] mt-2 animate-fade-in">{skill.offer}</p>
-                  )}
+                  <div className="cyber-orb">
+                    <span className="cyber-orb-icon">{skillIcons[skill.name]}</span>
+                    <h3 className="cyber-orb-title">{skill.name}</h3>
+                  </div>
+                  <div className="cyber-orb-text">
+                    <p>{skill.offer}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -287,18 +356,16 @@ function App() {
                     {activeTech === category.name && (
                       <div className="flex flex-wrap gap-4 justify-center animate-fade-in">
                         {category.items.map((item, idx) => (
-                          <div key={idx} className="tech-card flex flex-col items-center">
-                            <CircularProgressbar
-                              value={item.proficiency}
-                              text={category.name === "Blockchain Development" ? `${item.name} (${item.years} yrs)` : `${item.name} ${item.proficiency}%`}
-                              styles={buildStyles({
-                                textColor: 'var(--text)',
-                                pathColor: 'var(--accent)',
-                                trailColor: 'rgba(255, 255, 255, 0.2)',
-                                textSize: '14px',
-                              })}
-                              className="w-12 h-12" // Smaller size
-                            />
+                          <div key={idx} className="neon-progress">
+                            <span className="neon-progress-label">
+                              {category.name === "Blockchain Development" ? `${item.name} (${item.years} yrs)` : item.name}
+                            </span>
+                            <div className="neon-progress-bar">
+                              <div 
+                                className="neon-progress-fill" 
+                                style={{ width: `${item.proficiency}%` }}
+                              ></div>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -320,10 +387,6 @@ function App() {
                 <span className="text-lg text-[var(--text)] glow-text">beta.climax@gmail.com</span>
               </div>
               <div className="contact-item">
-                <FaTelegram className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
-                <span className="text-lg text-[var(--text)] glow-text">@stillbullrun</span>
-              </div>
-              <div className="contact-item">
                 <FaPhone className="inline-block text-[var(--accent)] text-xl mr-2 hover-spin" />
                 <span className="text-lg text-[var(--text)] glow-text">+1 2266405226</span>
               </div>
@@ -335,6 +398,9 @@ function App() {
           </div>
         </section>
       </main>
+
+      {/* Chatbot Component */}
+      <Chatbot />
 
       {/* Footer */}
       <footer className="text-center py-6 text-[var(--text)] opacity-70">
