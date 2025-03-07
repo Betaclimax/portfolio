@@ -7,6 +7,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import Image1 from './images/banner-bg3.jpg';
 import Image2 from './images/banner-bg4.jpg';
 import Avatar from './images/avatar.jpg';
@@ -20,12 +22,12 @@ function App() {
     { name: 'neon', icon: <FaStar /> }
   ];
 
-  // Validate initial theme from localStorage, default to 'light' if invalid
   const initialTheme = localStorage.getItem('theme');
   const validTheme = themes.some(t => t.name === initialTheme) ? initialTheme : 'dark';
   const [theme, setTheme] = useState(validTheme);
-
   const [activeSkill, setActiveSkill] = useState(null);
+  const [activeTech, setActiveTech] = useState(null); // New state for tech toggles
+
   const projects = [
     { 
       title: "Tradelot Technology, Remote", 
@@ -43,6 +45,7 @@ function App() {
       demo: "https://jin-portfolio.netlify.app"
     },
   ];
+
   const skills = [
     { name: "Web apps", offer: "I offer custom, scalable, and user-friendly web apps tailored to your needs. I build stable, high-performance websites using the latest technologies. My expertise includes AI integration, blockchain, and full-stack development to ensure secure, efficient, and future-proof solutions." },
     { name: "AI apps", offer: "AI-powered apps tailored to your needs, including automation tools, predictive analytics, and computer vision solutions. Using cutting-edge models and APIs, I ensure scalable, efficient, and user-friendly AI integration." },
@@ -56,17 +59,53 @@ function App() {
   };
 
   const techStack = {
-    languages: ["C", "C++", "Python", "Matlab", "HTML", "CSS", "JavaScript", "PHP", "Go", "TypeScript"],
-    frameworks: ["Visual Studio", "Django", "Flask", "Angular.js", "Laravel", "CI", "Spring", "Vue.js", "React", "FastAPI", "Express", "Nest.js"],
-    databases: ["MongoDB", "MySQL", "PostgreSQL", "Redis"],
+    languages: [
+      { name: "C", proficiency: 80 },
+      { name: "C++", proficiency: 85 },
+      { name: "Python", proficiency: 90 },
+      { name: "Matlab", proficiency: 70 },
+      { name: "HTML", proficiency: 95 },
+      { name: "CSS", proficiency: 90 },
+      { name: "JavaScript", proficiency: 95 },
+      { name: "PHP", proficiency: 75 },
+      { name: "Go", proficiency: 80 },
+      { name: "TypeScript", proficiency: 85 }
+    ],
+    frameworks: [
+      { name: "Visual Studio", proficiency: 80 },
+      { name: "Django", proficiency: 85 },
+      { name: "Flask", proficiency: 80 },
+      { name: "Angular.js", proficiency: 75 },
+      { name: "Laravel", proficiency: 70 },
+      { name: "CI", proficiency: 65 },
+      { name: "Spring", proficiency: 70 },
+      { name: "Vue.js", proficiency: 85 },
+      { name: "React", proficiency: 95 },
+      { name: "FastAPI", proficiency: 80 },
+      { name: "Express", proficiency: 85 },
+      { name: "Nest.js", proficiency: 80 }
+    ],
+    databases: [
+      { name: "MongoDB", proficiency: 85 },
+      { name: "MySQL", proficiency: 80 },
+      { name: "PostgreSQL", proficiency: 85 },
+      { name: "Redis", proficiency: 75 }
+    ],
     blockchain: [
-      { name: "Solidity", years: 3 },
-      { name: "Rust", years: 2 },
-      { name: "Cosmwasm", years: 2 },
-      { name: "Cosmos SDK", years: 2 },
-      { name: "Near-SDK-RS", years: 1 }
+      { name: "Solidity", years: 3, proficiency: 90 },
+      { name: "Rust", years: 2, proficiency: 85 },
+      { name: "Cosmwasm", years: 2, proficiency: 80 },
+      { name: "Cosmos SDK", years: 2, proficiency: 85 },
+      { name: "Near-SDK-RS", years: 1, proficiency: 70 }
     ]
   };
+
+  const techCategories = [
+    { name: "Languages", items: techStack.languages },
+    { name: "Frameworks", items: techStack.frameworks },
+    { name: "Databases", items: techStack.databases },
+    { name: "Blockchain Development", items: techStack.blockchain }
+  ];
 
   const carouselImages = [Image1, Image2];
 
@@ -119,7 +158,7 @@ function App() {
           className="text-3xl mb-12 text-[var(--accent)] nav-icon animate-nav-in hover-glow"
           style={{ animationDelay: '0.1s' }}
         >
-          {themes.find(t => t.name === theme)?.icon || <FaSun />} {/* Fallback to FaSun */}
+          {themes.find(t => t.name === theme)?.icon || <FaMoon />}
         </button>
         <button 
           onClick={() => scrollToSection('home')} 
@@ -142,7 +181,6 @@ function App() {
         >
           Contact
         </button>
-
         <a 
           href={Resume} 
           download="Jin_Resume.pdf" 
@@ -152,7 +190,6 @@ function App() {
         >
           <FaDownload />
         </a>
-
         <a 
           href="https://github.com" 
           target="_blank" 
@@ -180,13 +217,12 @@ function App() {
         >
           <FaDiscord />
         </a>
-        
       </nav>
 
       {/* Main Content */}
       <main className="ml-24 p-8">
         {/* Hero with Carousel */}
-        <section id ="home" className="relative h-screen">
+        <section id="home" className="relative h-screen">
           <Slider {...sliderSettings} className="w-full h-full">
             {carouselImages.map((img, index) => (
               <div key={index} className="w-full h-screen">
@@ -238,40 +274,37 @@ function App() {
               ))}
             </div>
             <div className="mt-12">
-              <h3 className="text-3xl font-bold text-[var(--text)] glow-text mb-8">My description</h3>
+              <h3 className="text-3xl font-bold text-[var(--text)] glow-text mb-8">My Tech Stack</h3>
               <div className="tech-grid max-w-4xl mx-auto">
-                <div className="tech-section">
-                  <h4 className="text-xl font-bold text-[var(--accent)] glow-text mb-4">Languages</h4>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    {techStack.languages.map((lang, idx) => (
-                      <div key={idx} className="tech-card">{lang}</div>
-                    ))}
+                {techCategories.map((category, index) => (
+                  <div key={index} className="tech-section">
+                    <button 
+                      onClick={() => setActiveTech(activeTech === category.name ? null : category.name)}
+                      className="text-xl text-[var(--accent)] glow-text flex items-center w-full justify-center hover-glow mb-4"
+                    >
+                      <span>{category.name}</span>
+                    </button>
+                    {activeTech === category.name && (
+                      <div className="flex flex-wrap gap-4 justify-center animate-fade-in">
+                        {category.items.map((item, idx) => (
+                          <div key={idx} className="tech-card flex flex-col items-center">
+                            <CircularProgressbar
+                              value={item.proficiency}
+                              text={category.name === "Blockchain Development" ? `${item.name} (${item.years} yrs)` : `${item.name} ${item.proficiency}%`}
+                              styles={buildStyles({
+                                textColor: 'var(--text)',
+                                pathColor: 'var(--accent)',
+                                trailColor: 'rgba(255, 255, 255, 0.2)',
+                                textSize: '14px',
+                              })}
+                              className="w-12 h-12" // Smaller size
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="tech-section">
-                  <h4 className="text-xl font-bold text-[var(--accent)] glow-text mb-4">Frameworks</h4>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    {techStack.frameworks.map((fw, idx) => (
-                      <div key={idx} className="tech-card">{fw}</div>
-                    ))}
-                  </div>
-                </div>
-                <div className="tech-section">
-                  <h4 className="text-xl font-bold text-[var(--accent)] glow-text mb-4">Databases</h4>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    {techStack.databases.map((db, idx) => (
-                      <div key={idx} className="tech-card">{db}</div>
-                    ))}
-                  </div>
-                </div>
-                <div className="tech-section">
-                  <h4 className="text-xl font-bold text-[var(--accent)] glow-text mb-4">Blockchain Development</h4>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    {techStack.blockchain.map((bc, idx) => (
-                      <div key={idx} className="tech-card">{bc.name} ({bc.years} yrs)</div>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
